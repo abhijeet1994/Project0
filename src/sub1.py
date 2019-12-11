@@ -24,15 +24,16 @@ if __name__ == '__main__':
 """
 def callback1(data):
     a = ( "I heard %s", data.data)
-    print(a)
-    print(a.type)
-    return a
+    a = str(a)
+    part[1] = a
+    
 
 def callback2(data):
     a =  ( "%s", data.data)
-    print (a)
-    print(a.type)
-    return a
+    a = str(a)
+    part[0] = a
+    print(part[0] + part[1])    
+
 def listener():
 
     # In ROS, nodes are uniquely named. If two nodes with the same
@@ -40,15 +41,16 @@ def listener():
     # anonymous=True flag means that rospy will choose a unique
     # name for our 'listener' node so that multiple listeners can
     # run simultaneously.
+    print("im here")
     rospy.init_node('listener', anonymous=True)
 
-    part2 = rospy.Subscriber("chatter", String, callback1)
-    part1 = rospy.Subscriber("chatter2", String, callback2)
+    rospy.Subscriber("chatter", String, callback1)
+    rospy.Subscriber("chatter2", String, callback2)
 
-    print (part1 + part2)	
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
 
 if __name__ == '__main__':
+    part = ["this", "should work"]
     listener()
 
